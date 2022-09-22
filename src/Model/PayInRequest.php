@@ -2,16 +2,21 @@
 
 namespace LiquidoBrl\VirgoPhpSdk\Model;
 
+use LiquidoBrl\VirgoPhpSdk\Util\Currency;
+use LiquidoBrl\VirgoPhpSdk\Util\Country;
+
 class PayInRequest
 {
 
     private String $idempotencyKey;
     private int $amount;
+    private String $currency;
+    private String $country;
     private String $paymentMethod;
     private String $paymentFlow;
     private String $callbackUrl;
     private String $description;
-    private object $payer;
+    private Payer $payer;
 
     public function __construct(
         array $requestData
@@ -19,6 +24,8 @@ class PayInRequest
         $dataObj = (object) $requestData;
         $this->idempotencyKey = $dataObj->idempotencyKey;
         $this->amount = $dataObj->amount;
+        $this->currency = Currency::BRL;
+        $this->country = Country::BRAZIL;
         $this->paymentMethod = $dataObj->paymentMethod;
         $this->paymentFlow = $dataObj->paymentFlow;
         $this->callbackUrl = $dataObj->callbackUrl;
@@ -36,6 +43,16 @@ class PayInRequest
     public function getAmount()
     {
         return $this->amount;
+    }
+
+    public function getCurrency()
+    {
+        return $this->currency;
+    }
+
+    public function getCountry()
+    {
+        return $this->country;
     }
 
     public function getPaymentMethod()

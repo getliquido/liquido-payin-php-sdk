@@ -8,14 +8,14 @@ class Payer
     private String $name = "";
     private String $email = "";
     private String $phone = "";
-    private object $document;
-    private object $billingAddress;
+    private Document $document;
+    private BillingAddress $billingAddress;
 
     public function __construct(
         array $payerData
     ) {
         $dataObj = (object) $payerData;
-        
+
         if (property_exists($dataObj, 'name')) {
             $this->name = $dataObj->name;
         }
@@ -27,7 +27,11 @@ class Payer
         if (property_exists($dataObj, 'phone')) {
             $this->phone = $dataObj->phone;
         }
-        
+
+        if (property_exists($dataObj, 'document')) {
+            $docObj = new Document($dataObj->document);
+            $this->document = $docObj;
+        }
     }
 
     public function getEmail()
@@ -43,5 +47,15 @@ class Payer
     public function getPhone()
     {
         return $this->phone;
+    }
+
+    public function getDocument()
+    {
+        return $this->document;
+    }
+
+    public function getBillingAddress()
+    {
+        return $this->billingAddress;
     }
 }

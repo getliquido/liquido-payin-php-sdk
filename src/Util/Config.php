@@ -12,7 +12,6 @@ class Config
 
     public const CURRENCY = "BRL";
     public const COUNTRY = "BR";
-    public const PAYMENT_FLOW_DIRECT = "DIRECT";
 
     private String $clientId = "";
     private String $clientSecret = "";
