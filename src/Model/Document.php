@@ -1,6 +1,6 @@
 <?php
 
-namespace LiquidoBrl\VirgoPhpSdk\Model;
+namespace LiquidoBrl\PayInPhpSdk\Model;
 
 class Document
 {

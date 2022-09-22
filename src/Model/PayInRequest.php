@@ -1,9 +1,9 @@
 <?php
 
-namespace LiquidoBrl\VirgoPhpSdk\Model;
+namespace LiquidoBrl\PayInPhpSdk\Model;
 
-use LiquidoBrl\VirgoPhpSdk\Util\Currency;
-use LiquidoBrl\VirgoPhpSdk\Util\Country;
+use LiquidoBrl\PayInPhpSdk\Util\Currency;
+use LiquidoBrl\PayInPhpSdk\Util\Country;
 
 class PayInRequest
 {
@@ -78,5 +78,23 @@ class PayInRequest
     public function getPayer()
     {
         return $this->payer;
+    }
+
+    public function toArray()
+    {
+        $requestArray = [
+            "idempotencyKey" => $this->idempotencyKey,
+            "amount" => $this->amount,
+            "currency" => $this->currency,
+            "country" => $this->country,
+            "paymentMethod" => $this->paymentMethod,
+            "paymentFlow" => $this->paymentFlow,
+            "callbackUrl" => $this->callbackUrl,
+            "payer" => [
+                "email" => $this->payer->getEmail()
+            ],
+            "description" => $this->description
+        ];
+        return $requestArray;
     }
 }

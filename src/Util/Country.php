@@ -1,6 +1,6 @@
 <?php
 
-namespace LiquidoBrl\VirgoPhpSdk\Util;
+namespace LiquidoBrl\PayInPhpSdk\Util;
 
 abstract class Country
 {
