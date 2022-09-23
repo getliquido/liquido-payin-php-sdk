@@ -1,77 +1,59 @@
 <?php
 
-namespace Liquido\PayIn\Gateway\Brl\ApiClient;
+namespace LiquidoBrl\PayInPhpSdk\ApiClient;
 
-use \Magento\Framework\HTTP\Client\Curl;
-use \Psr\Log\LoggerInterface;
+use GuzzleHttp\Client;
+use GuzzleHttp\Psr7\Request;
 
-use \Liquido\PayIn\Helper\Brl\LiquidoBrlConfigData;
+use LiquidoBrl\PayInPhpSdk\Util\Config;
+use LiquidoBrl\PayInPhpSdk\Model\PayInRequest;
 
-class BoletoClient
+class BoletoClient extends PayInClient
 {
 
-    private const BOLETO_ENDPOINT = "/v1/payments/charges/boleto";
-    private const BOLETO_PDF_ENDPOINT = "/v1/payments/files/boleto/pdf/";
-
-    protected Curl $curl;
-    private LoggerInterface $logger;
-    protected LiquidoBrlConfigData $liquidoConfig;
+    private const ENDPOINT = "/v1/payments/charges/boleto";
+    private const PDF_ENDPOINT = "/v1/payments/files/boleto/pdf";
 
     public function __construct(
-        Curl $_curl,
-        LoggerInterface $logger,
-        LiquidoBrlConfigData $liquidoConfig,
-        LiquidoBrlAuthClient $liquidoAuthClient
+        Config $configData,
+        String $accessToken
     ) {
-        $this->curl = $_curl;
-        $this->logger = $logger;
-        $this->liquidoConfig = $liquidoConfig;
-
-        $this->curl->addHeader("Content-Type", "application/json");
-        $this->curl->addHeader("x-api-key", $this->liquidoConfig->getApiKey());
-
-        $liquidoAuthClient->setLogger($logger);
-        $authResponse = $liquidoAuthClient->authenticate();
-        if ($authResponse != null) {
-            $this->curl->addHeader("Authorization", "Bearer $authResponse->access_token");
-        }
+        parent::setAccessToken($accessToken);
+        $this->configData = $configData;
+        $this->client = new Client();
     }
 
-    public function createBoletoPayIn($data)
+    public function createPayIn(PayInRequest $boletoRequest)
     {
-        $url = $this->liquidoConfig->getVirgoBaseUrl() . $this::BOLETO_ENDPOINT;
+        $url = $this->configData->getPayInBaseUrl() . self::ENDPOINT;
 
-        $className = static::class;
-        $this->logger->info("[ {$className} ]: Url: {$url} - REQUEST payload:", $data);
+        $payload = $boletoRequest->toArray();
+        $boletoResponse = parent::requestPayIn($url, $payload);
 
-        try {
-            $jsonData = json_encode($data);
-            $this->curl->post($url, $jsonData);
-            $result = $this->curl->getBody();
-            $boletoResponse = json_decode($result);
+        $boletoUrl = $this->getBoletoPdfUrl($boletoResponse->idempotencyKey);
+        $boletoResponse->{"boletoUrl"} = $boletoUrl;
 
-            $this->logger->info("[ {$className} ]: RESPONSE payload:", (array) $boletoResponse);
-
-            return $boletoResponse;
-        } catch (\Exception $e) {
-            $this->logger->error("[ {$className} ]: Error while request Boleto");
-            $this->logger->error($e->getMessage());
-        }
+        return $boletoResponse;
     }
 
-    public function getBoletoPdfUrl($idempotencyKey)
+    private function getBoletoPdfUrl(String $idempotencyKey)
     {
-        $url = $this->liquidoConfig->getVirgoBaseUrl() . $this::BOLETO_PDF_ENDPOINT . $idempotencyKey;
-
-        $className = static::class;
+        $url = $this->configData->getPayInBaseUrl() . self::PDF_ENDPOINT . "/" . $idempotencyKey;
+        $request = new Request('GET', $url);
 
         try {
-            $this->curl->get($url);
-            $result = $this->curl->getBody();
-            return $result;
+
+            $response = $this->client->send($request, [
+                'headers' => [
+                    'x-api-key' => $this->configData->getClientApiKey(),
+                    'Authorization' => $this->accessToken
+                ]
+            ]);
+
+            $responseBody = (string) $response->getBody();
+            return $responseBody;
         } catch (\Exception $e) {
-            $this->logger->error("[ {$className} ]: Error while request Boleto PDF file");
-            $this->logger->error($e->getMessage());
+            throw new \Exception("Error while getting Boleto PDF. {$e->getMessage()}");
         }
     }
 }

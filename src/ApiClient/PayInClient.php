@@ -13,10 +13,9 @@ abstract class PayInClient
 
     protected Config $configData;
     protected Client $client;
-    private String $accessToken;
-    // private LoggerInterface $logger;
+    protected String $accessToken;
 
-    abstract public function createPayIn(String $accessToken, PayInRequest $payInRequest);
+    abstract public function createPayIn(PayInRequest $payInRequest);
 
     protected function setAccessToken(String $accessToken)
     {
@@ -26,8 +25,6 @@ abstract class PayInClient
     protected function requestPayIn(String $url, array $payload)
     {
         $request = new Request('POST', $url);
-        // $className = static::class;
-        // $this->logger->info("[ {$className} ]: Url: {$url} - REQUEST payload:", $this->formData);
 
         try {
 
@@ -40,15 +37,11 @@ abstract class PayInClient
                 'json' => $payload
             ]);
 
-            $response_body = (string) $response->getBody();
-
-            $payInResponse = json_decode($response_body);
-            // $this->logger->info("[ {$className} ]: RESPONSE payload:", (array) $authResponse);
+            $responseBody = (string) $response->getBody();
+            $payInResponse = json_decode($responseBody);
             return $payInResponse;
         } catch (\Exception $e) {
-            // $this->logger->error("[ {$className} ]: Error while request Liquido Access Token");
-            // $this->logger->error($e->getMessage());
-            return null;
+            throw new \Exception("Error while request pay in to Liquido BR API. {$e->getMessage()}");
         }
     }
 }

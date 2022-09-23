@@ -5,14 +5,14 @@ namespace LiquidoBrl\PayInPhpSdk\Model;
 class BillingAddress
 {
 
-    private String $zipCode = "";
-    private String $state = "";
-    private String $city = "";
-    private String $district = "";
-    private String $street = "";
-    private String $number = "";
-    private String $complement = "";
-    private String $country = "";
+    private ?String $zipCode = null;
+    private ?String $state = null;
+    private ?String $city = null;
+    private ?String $district = null;
+    private ?String $street = null;
+    private ?String $number = null;
+    private ?String $complement = null;
+    private ?String $country = null;
 
     public function __construct(
         array $billingAddressData
@@ -52,43 +52,42 @@ class BillingAddress
         }
     }
 
-    public function getZipCode()
+    public function toArray()
     {
-        return $this->zipCode;
-    }
+        $arrayData = array();
 
-    public function getState()
-    {
-        return $this->state;
-    }
+        if ($this->zipCode != null) {
+            $arrayData["zipCode"] = $this->zipCode;
+        }
 
-    public function getCity()
-    {
-        return $this->city;
-    }
+        if ($this->state != null) {
+            $arrayData["state"] = $this->state;
+        }
 
-    public function getDistrict()
-    {
-        return $this->district;
-    }
+        if ($this->city != null) {
+            $arrayData["city"] = $this->city;
+        }
 
-    public function getStreet()
-    {
-        return $this->street;
-    }
+        if ($this->district != null) {
+            $arrayData["district"] = $this->district;
+        }
 
-    public function getNumber()
-    {
-        return $this->number;
-    }
+        if ($this->street != null) {
+            $arrayData["street"] = $this->street;
+        }
 
-    public function getComplement()
-    {
-        return $this->complement;
-    }
+        if ($this->number != null) {
+            $arrayData["number"] = $this->number;
+        }
 
-    public function getCountry()
-    {
-        return $this->country;
+        if ($this->complement != null) {
+            $arrayData["complement"] = $this->complement;
+        }
+
+        if ($this->country != null) {
+            $arrayData["country"] = $this->country;
+        }
+
+        return $arrayData;
     }
 }

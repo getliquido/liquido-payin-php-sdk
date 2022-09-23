@@ -5,8 +5,8 @@ namespace LiquidoBrl\PayInPhpSdk\Model;
 class Document
 {
 
-    private String $documentId = "";
-    private String $type = "";
+    private ?String $documentId = null;
+    private ?String $type = null;
 
     public function __construct(
         array $documenData
@@ -22,13 +22,18 @@ class Document
         }
     }
 
-    public function getDocumentId()
+    public function toArray()
     {
-        return $this->documentId;
-    }
+        $arrayData = array();
 
-    public function getType()
-    {
-        return $this->type;
+        if ($this->documentId != null) {
+            $arrayData["documentId"] = $this->documentId;
+        }
+
+        if ($this->type != null) {
+            $arrayData["type"] = $this->type;
+        }
+
+        return $arrayData;
     }
 }

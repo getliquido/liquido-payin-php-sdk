@@ -2,13 +2,14 @@
 
 namespace LiquidoBrl\PayInPhpSdk\Service;
 
-use Exception;
 use LiquidoBrl\PayInPhpSdk\Util\Config;
 use LiquidoBrl\PayInPhpSdk\Model\PayInRequest;
 use LiquidoBrl\PayInPhpSdk\ApiClient\AuthClient;
 use LiquidoBrl\PayInPhpSdk\Util\PaymentMethod;
 use LiquidoBrl\PayInPhpSdk\ApiClient\PayInClient;
+use LiquidoBrl\PayInPhpSdk\ApiClient\CreditCardClient;
 use LiquidoBrl\PayInPhpSdk\ApiClient\PixClient;
+use LiquidoBrl\PayInPhpSdk\ApiClient\BoletoClient;
 
 class PayInService
 {
@@ -27,28 +28,23 @@ class PayInService
         if ($accessToken != null) {
 
             $paymentMethod = $payInRequest->getPaymentMethod();
+
             switch ($paymentMethod) {
                 case PaymentMethod::CREDIT_CARD:
-                    //
+                    $this->payInClient = new CreditCardClient($configData, $accessToken);
                     break;
-                case PaymentMethod::PIX_DYNAMIC_QR || PaymentMethod::PIX_STATIC_QR:
-                    $this->payInClient = new PixClient($configData);
+                case PaymentMethod::PIX_STATIC_QR:
+                    $this->payInClient = new PixClient($configData, $accessToken);
                     break;
                 case PaymentMethod::BOLETO:
-                    //
+                    $this->payInClient = new BoletoClient($configData, $accessToken);
                     break;
                 default:
-                    return null;
+                    $this->payInClient = null;
             }
 
-            try {
-                $payInResponse = $this->payInClient->createPayIn($accessToken, $payInRequest);
-                return $payInResponse;
-            } catch (Exception $e) {
-                throw new Exception('Error while creating the pay in request.');
-            }
-        } else {
-            throw new Exception('Erro while getting the access token.');
+            $payInResponse = $this->payInClient->createPayIn($payInRequest);
+            return $payInResponse;
         }
     }
 
@@ -60,8 +56,8 @@ class PayInService
                 return $authResponse->access_token;
             }
             return null;
-        } catch (Exception $e) {
-            return null;
+        } catch (\Exception $e) {
+            throw new \Exception("Error while getting the access token. {$e->getMessage()}");
         }
     }
 }

@@ -12,18 +12,19 @@ class PixClient extends PayInClient
     private const ENDPOINT = "/v1/payments/charges/pix";
 
     public function __construct(
-        Config $configData
+        Config $configData,
+        String $accessToken
     ) {
+        parent::setAccessToken($accessToken);
         $this->configData = $configData;
         $this->client = new Client();
     }
 
-    public function createPayIn(String $accessToken, PayInRequest $pixRequest)
+    public function createPayIn(PayInRequest $pixRequest)
     {
         $url = $this->configData->getPayInBaseUrl() . self::ENDPOINT;
 
         $payload = $pixRequest->toArray();
-        parent::setAccessToken($accessToken);
         $pixResponse = parent::requestPayIn($url, $payload);
         return $pixResponse;
     }

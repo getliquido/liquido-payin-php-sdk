@@ -5,11 +5,11 @@ namespace LiquidoBrl\PayInPhpSdk\Model;
 class Payer
 {
 
-    private String $name = "";
-    private String $email = "";
-    private String $phone = "";
-    private Document $document;
-    private BillingAddress $billingAddress;
+    private ?String $name = null;
+    private ?String $email = null;
+    private ?String $phone = null;
+    private ?Document $document = null;
+    private ?BillingAddress $billingAddress = null;
 
     public function __construct(
         array $payerData
@@ -32,30 +32,37 @@ class Payer
             $docObj = new Document($dataObj->document);
             $this->document = $docObj;
         }
+
+        if (property_exists($dataObj, 'billingAddress')) {
+            $billingAddressObj = new BillingAddress($dataObj->billingAddress);
+            $this->billingAddress = $billingAddressObj;
+        }
     }
 
-    public function getEmail()
+    public function toArray()
     {
-        return $this->email;
-    }
+        $arrayData = array();
 
-    public function getName()
-    {
-        return $this->name;
-    }
+        if ($this->name != null) {
+            $arrayData["name"] = $this->name;
+        }
 
-    public function getPhone()
-    {
-        return $this->phone;
-    }
+        if ($this->email != null) {
+            $arrayData["email"] = $this->email;
+        }
 
-    public function getDocument()
-    {
-        return $this->document;
-    }
+        if ($this->phone != null) {
+            $arrayData["phone"] = $this->phone;
+        }
 
-    public function getBillingAddress()
-    {
-        return $this->billingAddress;
+        if ($this->document != null) {
+            $arrayData["document"] = $this->document->toArray();
+        }
+
+        if ($this->billingAddress != null) {
+            $arrayData["billingAddress"] = $this->billingAddress->toArray();
+        }
+
+        return $arrayData;
     }
 }
