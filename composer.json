@@ -3,6 +3,8 @@
     "description": "Classes for request to Liquido BR Virgo API.",
     "type": "library",
     "version": "0.0.1",
+    "minimum-stability": "stable",
+    "license": "MIT",
     "autoload": {
         "psr-4": {
             "LiquidoBrl\\PayInPhpSdk\\": "src/"
