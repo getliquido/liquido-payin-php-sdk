@@ -66,7 +66,7 @@ class PayInRequest
         }
 
         if (property_exists($dataObj, 'riskData')) {
-            $riskDataObj = new PaymentTerm($dataObj->riskData);
+            $riskDataObj = new RiskData($dataObj->riskData);
             $this->riskData = $riskDataObj;
         }
 
