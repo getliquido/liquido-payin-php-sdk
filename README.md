@@ -49,5 +49,6 @@ $payInRequest = new PayInRequest([
     ...
 ]);
 
-$payIndResponse = new PayInService()->createPayIn($config, $payInRequest);
+$payInService = new PayInService();
+$payInResponse = $payInService->createPayIn($config, $payInRequest);
 ```
