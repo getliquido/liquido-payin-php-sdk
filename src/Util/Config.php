@@ -4,21 +4,22 @@ namespace LiquidoBrl\PayInPhpSdk\Util;
 
 class Config
 {
-    private const LIQUIDO_SANDBOX_AUTH_URL = "https://auth-dev.liquido.com/oauth2/token";
-    private const LIQUIDO_SANDBOX_PAYIN_BASE_URL = "https://api-qa.liquido.com";
+    const LIQUIDO_SANDBOX_AUTH_URL = "https://auth-dev.liquido.com/oauth2/token";
+    const LIQUIDO_SANDBOX_PAYIN_BASE_URL = "https://api-qa.liquido.com";
 
-    private const LIQUIDO_PRODUCTION_AUTH_URL = "https://authsg.liquido.com/oauth2/token";
-    private const LIQUIDO_PRODUCTION_PAYIN_BASE_URL = "https://api.liquido.com";
+    const LIQUIDO_PRODUCTION_AUTH_URL = "https://authsg.liquido.com/oauth2/token";
+    const LIQUIDO_PRODUCTION_PAYIN_BASE_URL = "https://api.liquido.com";
 
-    public const GRANT_TYPE = "client_credentials";
-    private String $clientId = "";
-    private String $clientSecret = "";
-    private String $apiKey = "";
-    private bool $isLiveMode = false;
+    const GRANT_TYPE = "client_credentials";
+    
+    private $clientId = "";
+    private $clientSecret = "";
+    private $apiKey = "";
+    private $isLiveMode = false;
 
     public function __construct(
-        array $configData,
-        bool $isLiveMode = false
+        $configData = array(),
+        $isLiveMode = false
     ) {
         $dataObj = (object) $configData;
         if (property_exists($dataObj, 'clientId')) {

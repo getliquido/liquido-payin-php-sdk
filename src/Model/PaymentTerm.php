@@ -4,10 +4,10 @@ namespace LiquidoBrl\PayInPhpSdk\Model;
 
 class PaymentTerm
 {
-    private String $paymentDeadline;
+    private $paymentDeadline = null;
 
     public function __construct(
-        array $paymentTermData
+        $paymentTermData = array()
     ) {
         $dataObj = (object) $paymentTermData;
 

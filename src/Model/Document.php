@@ -5,11 +5,11 @@ namespace LiquidoBrl\PayInPhpSdk\Model;
 class Document
 {
 
-    private ?String $documentId = null;
-    private ?String $type = null;
+    private $documentId = null;
+    private $type = null;
 
     public function __construct(
-        array $documenData
+        $documenData = array()
     ) {
         $dataObj = (object) $documenData;
 

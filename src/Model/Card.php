@@ -5,14 +5,14 @@ namespace LiquidoBrl\PayInPhpSdk\Model;
 class Card
 {
 
-    private ?String $cardHolderName = null;
-    private ?String $cardNumber = null;
-    private ?String $expirationMonth = null;
-    private ?String $expirationYear = null;
-    private ?String $cvc = null;
+    private $cardHolderName = null;
+    private $cardNumber = null;
+    private $expirationMonth = null;
+    private $expirationYear = null;
+    private $cvc = null;
 
     public function __construct(
-        array $cardData
+        $cardData = array()
     ) {
         $dataObj = (object) $cardData;
 

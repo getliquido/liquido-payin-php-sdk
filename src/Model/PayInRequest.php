@@ -8,23 +8,23 @@ use LiquidoBrl\PayInPhpSdk\Util\Country;
 class PayInRequest
 {
 
-    private ?String $idempotencyKey = null;
-    private ?int $amount = null;
-    private ?String $currency = null;
-    private ?String $country = null;
-    private ?String $paymentMethod = null;
-    private ?String $paymentFlow = null;
-    private ?String $callbackUrl = null;
-    private ?String $description = null;
-    private ?Payer $payer = null;
+    private $idempotencyKey = null;
+    private $amount = null;
+    private $currency = null;
+    private $country = null;
+    private $paymentMethod = null;
+    private $paymentFlow = null;
+    private $callbackUrl = null;
+    private $description = null;
+    private $payer = null;
     // private ?OrderInfo $orderInfo = null;
-    private ?PaymentTerm $paymentTerm = null;
-    private ?RiskData $riskData = null;
-    private ?Card $card = null;
-    private ?int $installments = null;
+    private $paymentTerm = null;
+    private $riskData = null;
+    private $card = null;
+    private $installments = null;
 
     public function __construct(
-        array $requestData
+        $requestData = array()
     ) {
         $dataObj = (object) $requestData;
 

@@ -4,5 +4,5 @@ namespace LiquidoBrl\PayInPhpSdk\Util;
 
 abstract class Currency
 {
-    public const BRL = 'BRL';
+    const BRL = 'BRL';
 }

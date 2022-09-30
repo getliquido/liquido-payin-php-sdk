@@ -5,17 +5,17 @@ namespace LiquidoBrl\PayInPhpSdk\Model;
 class BillingAddress
 {
 
-    private ?String $zipCode = null;
-    private ?String $state = null;
-    private ?String $city = null;
-    private ?String $district = null;
-    private ?String $street = null;
-    private ?String $number = null;
-    private ?String $complement = null;
-    private ?String $country = null;
+    private $zipCode = null;
+    private $state = null;
+    private $city = null;
+    private $district = null;
+    private $street = null;
+    private $number = null;
+    private $complement = null;
+    private $country = null;
 
     public function __construct(
-        array $billingAddressData
+        $billingAddressData = array()
     ) {
         $dataObj = (object) $billingAddressData;
 

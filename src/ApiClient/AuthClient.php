@@ -10,8 +10,8 @@ use LiquidoBrl\PayInPhpSdk\Util\Config;
 class AuthClient
 {
 
-    private Config $configData;
-    private Client $client;
+    private $configData = null;
+    private $client = null;
 
     public function __construct(
         Config $configData

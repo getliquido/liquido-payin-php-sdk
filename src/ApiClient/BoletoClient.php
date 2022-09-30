@@ -11,8 +11,8 @@ use LiquidoBrl\PayInPhpSdk\Model\PayInRequest;
 class BoletoClient extends PayInClient
 {
 
-    private const ENDPOINT = "/v1/payments/charges/boleto";
-    private const PDF_ENDPOINT = "/v1/payments/files/boleto/pdf";
+    const ENDPOINT = "/v1/payments/charges/boleto";
+    const PDF_ENDPOINT = "/v1/payments/files/boleto/pdf";
 
     public function __construct(
         Config $configData,

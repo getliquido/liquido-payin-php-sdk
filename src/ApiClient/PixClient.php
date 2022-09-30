@@ -9,7 +9,7 @@ use LiquidoBrl\PayInPhpSdk\Model\PayInRequest;
 
 class PixClient extends PayInClient
 {
-    private const ENDPOINT = "/v1/payments/charges/pix";
+    const ENDPOINT = "/v1/payments/charges/pix";
 
     public function __construct(
         Config $configData,

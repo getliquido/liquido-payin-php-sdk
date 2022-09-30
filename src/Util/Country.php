@@ -4,5 +4,5 @@ namespace LiquidoBrl\PayInPhpSdk\Util;
 
 abstract class Country
 {
-    public const BRAZIL = 'BR';
+    const BRAZIL = 'BR';
 }

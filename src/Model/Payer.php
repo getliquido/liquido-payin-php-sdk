@@ -5,14 +5,14 @@ namespace LiquidoBrl\PayInPhpSdk\Model;
 class Payer
 {
 
-    private ?String $name = null;
-    private ?String $email = null;
-    private ?String $phone = null;
-    private ?Document $document = null;
-    private ?BillingAddress $billingAddress = null;
+    private $name = null;
+    private $email = null;
+    private $phone = null;
+    private $document = null;
+    private $billingAddress = null;
 
     public function __construct(
-        array $payerData
+        $payerData = array()
     ) {
         $dataObj = (object) $payerData;
 

@@ -2,18 +2,16 @@
 
 namespace LiquidoBrl\PayInPhpSdk\ApiClient;
 
-use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Request;
 
-use LiquidoBrl\PayInPhpSdk\Util\Config;
 use LiquidoBrl\PayInPhpSdk\Model\PayInRequest;
 
 abstract class PayInClient
 {
 
-    protected Config $configData;
-    protected Client $client;
-    protected String $accessToken;
+    protected $configData = null;
+    protected $client = null;
+    protected $accessToken = null;
 
     abstract public function createPayIn(PayInRequest $payInRequest);
 

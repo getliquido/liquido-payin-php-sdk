@@ -4,6 +4,6 @@ namespace LiquidoBrl\PayInPhpSdk\Util;
 
 abstract class PaymentFlow
 {
-    public const DIRECT = "DIRECT";
-    public const REDIRECT = "REDIRECT";
+    const DIRECT = "DIRECT";
+    const REDIRECT = "REDIRECT";
 }

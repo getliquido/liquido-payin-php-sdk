@@ -6,7 +6,6 @@ use LiquidoBrl\PayInPhpSdk\Util\Config;
 use LiquidoBrl\PayInPhpSdk\Model\PayInRequest;
 use LiquidoBrl\PayInPhpSdk\ApiClient\AuthClient;
 use LiquidoBrl\PayInPhpSdk\Util\PaymentMethod;
-use LiquidoBrl\PayInPhpSdk\ApiClient\PayInClient;
 use LiquidoBrl\PayInPhpSdk\ApiClient\CreditCardClient;
 use LiquidoBrl\PayInPhpSdk\ApiClient\PixClient;
 use LiquidoBrl\PayInPhpSdk\ApiClient\BoletoClient;
@@ -14,8 +13,8 @@ use LiquidoBrl\PayInPhpSdk\ApiClient\BoletoClient;
 class PayInService
 {
 
-    private AuthClient $authClient;
-    private PayInClient $payInClient;
+    private $authClient = null;
+    private $payInClient = null;
 
     public function createPayIn(
         Config $configData,

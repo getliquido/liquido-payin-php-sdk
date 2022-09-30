@@ -10,7 +10,7 @@ use LiquidoBrl\PayInPhpSdk\Model\PayInRequest;
 class CreditCardClient extends PayInClient
 {
 
-    private const ENDPOINT = "/v1/payments/charges/card";
+    const ENDPOINT = "/v1/payments/charges/card";
 
     public function __construct(
         Config $configData,

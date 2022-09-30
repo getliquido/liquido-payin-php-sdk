@@ -4,11 +4,11 @@ namespace LiquidoBrl\PayInPhpSdk\Model;
 
 class RiskData
 {
-    private ?String $ipAddress = null;
-    private ?array $customProperties = null;
+    private $ipAddress = null;
+    private $customProperties = null;
 
     public function __construct(
-        array $riskData
+        $riskData = array()
     ) {
         $dataObj = (object) $riskData;
 

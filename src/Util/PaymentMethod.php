@@ -4,8 +4,8 @@ namespace LiquidoBrl\PayInPhpSdk\Util;
 
 abstract class PaymentMethod
 {
-    public const CREDIT_CARD = "CREDIT_CARD";
-    public const PIX_STATIC_QR = "PIX_STATIC_QR";
-    public const PIX_DYNAMIC_QR = "PIX_DYNAMIC_QR";
-    public const BOLETO = "BOLETO";
+    const CREDIT_CARD = "CREDIT_CARD";
+    const PIX_STATIC_QR = "PIX_STATIC_QR";
+    const PIX_DYNAMIC_QR = "PIX_DYNAMIC_QR";
+    const BOLETO = "BOLETO";
 }
