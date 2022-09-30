@@ -8,7 +8,7 @@ You can add this in your `composer.json` file to download this library as a depe
 
 ```
 "require": {
-    "liquido-brl/payin-php-sdk": "0.0.1"
+    "liquido-brl/payin-php-sdk": "0.0.4"
 },
 ```
 
