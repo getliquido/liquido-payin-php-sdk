@@ -1,6 +1,6 @@
 <?php
 
-namespace LiquidoBrl\PayInPhpSdk\ApiClient;
+namespace LiquidoBrl\PayInPhpSdk\ApiClient\Colombia;
 
 use GuzzleHttp\Client;
 
@@ -8,26 +8,26 @@ use LiquidoBrl\PayInPhpSdk\ApiClient\PayInClient;
 use LiquidoBrl\PayInPhpSdk\Util\Config;
 use LiquidoBrl\PayInPhpSdk\Model\PayInRequest;
 
-class CreditCardClient extends PayInClient
+class PSEClient extends PayInClient
 {
-
-    const ENDPOINT = "/v1/payments/charges/card";
+    const ENDPOINT = '/v1/payments/charges/pse';
 
     public function __construct(
         Config $configData,
         String $accessToken
-    ) {
+    )
+    {
         parent::setAccessToken($accessToken);
         $this->configData = $configData;
         $this->client = new Client();
     }
 
-    public function createPayIn(PayInRequest $boletoRequest)
+    public function createPayIn(PayInRequest $pseRequest)
     {
         $url = $this->configData->getPayInBaseUrl() . self::ENDPOINT;
+        $payload = $pseRequest->toArray();
+        $pseResponse = parent::requestPayIn($url, $payload);
 
-        $payload = $boletoRequest->toArray();
-        $boletoResponse = parent::requestPayIn($url, $payload);
-        return $boletoResponse;
+        return $pseResponse;
     }
 }

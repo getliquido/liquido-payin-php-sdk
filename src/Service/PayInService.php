@@ -2,13 +2,15 @@
 
 namespace LiquidoBrl\PayInPhpSdk\Service;
 
-use LiquidoBrl\PayInPhpSdk\Util\Config;
-use LiquidoBrl\PayInPhpSdk\Model\PayInRequest;
 use LiquidoBrl\PayInPhpSdk\ApiClient\AuthClient;
-use LiquidoBrl\PayInPhpSdk\Util\PaymentMethod;
+use LiquidoBrl\PayInPhpSdk\ApiClient\Brazil\BoletoClient;
+use LiquidoBrl\PayInPhpSdk\ApiClient\Brazil\PixClient;
+use LiquidoBrl\PayInPhpSdk\ApiClient\Colombia\CashClient;
+use LiquidoBrl\PayInPhpSdk\ApiClient\Colombia\PSEClient;
 use LiquidoBrl\PayInPhpSdk\ApiClient\CreditCardClient;
-use LiquidoBrl\PayInPhpSdk\ApiClient\PixClient;
-use LiquidoBrl\PayInPhpSdk\ApiClient\BoletoClient;
+use LiquidoBrl\PayInPhpSdk\Model\PayInRequest;
+use LiquidoBrl\PayInPhpSdk\Util\Config;
+use LiquidoBrl\PayInPhpSdk\Util\PaymentMethod;
 
 class PayInService
 {
@@ -38,6 +40,10 @@ class PayInService
                 case PaymentMethod::BOLETO:
                     $this->payInClient = new BoletoClient($configData, $accessToken);
                     break;
+                case PaymentMethod::CASH:
+                    $this->payInClient = new CashClient($configData, $accessToken);
+                case PaymentMethod::PSE:
+                    $this->payInClient = new PSEClient($configData, $accessToken);
                 default:
                     $this->payInClient = null;
             }

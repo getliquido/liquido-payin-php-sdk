@@ -2,8 +2,8 @@
 
 namespace LiquidoBrl\PayInPhpSdk\Model;
 
-use LiquidoBrl\PayInPhpSdk\Util\Currency;
-use LiquidoBrl\PayInPhpSdk\Util\Country;
+// use LiquidoBrl\PayInPhpSdk\Util\Currency;
+// use LiquidoBrl\PayInPhpSdk\Util\Country;
 
 class PayInRequest
 {
@@ -22,14 +22,23 @@ class PayInRequest
     private $riskData = null;
     private $card = null;
     private $installments = null;
+    private $pse = null;
 
     public function __construct(
         $requestData = array()
     ) {
         $dataObj = (object) $requestData;
 
-        $this->currency = Currency::BRL;
-        $this->country = Country::BRAZIL;
+        // $this->currency = Currency::BRL;
+        // $this->country = Country::BRAZIL;
+
+        if (property_exists($dataObj, 'currency')) {
+            $this->currency = $dataObj->currency;
+        }
+
+        if (property_exists($dataObj, 'country')) {
+            $this->country = $dataObj->country;
+        }
 
         if (property_exists($dataObj, 'idempotencyKey')) {
             $this->idempotencyKey = $dataObj->idempotencyKey;
@@ -77,6 +86,11 @@ class PayInRequest
 
         if (property_exists($dataObj, 'installments')) {
             $this->installments = $dataObj->installments;
+        }
+        
+        if (property_exists($dataObj, 'pse')) {
+            $pseObj = new PSE($dataObj->pse);
+            $this->pse = $pseObj;
         }
     }
 
@@ -144,6 +158,10 @@ class PayInRequest
 
         if ($this->installments != null) {
             $arrayData["installments"] = $this->installments;
+        }
+
+        if ($this->pse != null) {
+            $arrayData["pse"] = $this->pse->toArray();
         }
 
         return $arrayData;

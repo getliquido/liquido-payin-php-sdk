@@ -1,10 +1,11 @@
 <?php
 
-namespace LiquidoBrl\PayInPhpSdk\ApiClient;
+namespace LiquidoBrl\PayInPhpSdk\ApiClient\Brazil;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Request;
 
+use LiquidoBrl\PayInPhpSdk\ApiClient\PayInClient;
 use LiquidoBrl\PayInPhpSdk\Util\Config;
 use LiquidoBrl\PayInPhpSdk\Model\PayInRequest;
 
