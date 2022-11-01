@@ -3,52 +3,39 @@
 namespace LiquidoBrl\PayInPhpSdk\Service;
 
 use LiquidoBrl\PayInPhpSdk\ApiClient\AuthClient;
-use LiquidoBrl\PayInPhpSdk\ApiClient\Brazil\BoletoClient;
-use LiquidoBrl\PayInPhpSdk\ApiClient\Brazil\PixClient;
-use LiquidoBrl\PayInPhpSdk\ApiClient\Colombia\CashClient;
-use LiquidoBrl\PayInPhpSdk\ApiClient\Colombia\PSEClient;
-use LiquidoBrl\PayInPhpSdk\ApiClient\CreditCardClient;
 use LiquidoBrl\PayInPhpSdk\Model\PayInRequest;
 use LiquidoBrl\PayInPhpSdk\Util\Config;
-use LiquidoBrl\PayInPhpSdk\Util\PaymentMethod;
+use LiquidoBrl\PayInPhpSdk\Util\Country;
+use LiquidoBrl\PayInPhpSdk\Service\Brazil\BrazilService;
+use LiquidoBrl\PayInPhpSdk\Service\Colombia\ColombiaService;
 
 class PayInService
 {
 
     private $authClient = null;
-    private $payInClient = null;
+    private $payInService = null;
 
     public function createPayIn(
         Config $configData,
         PayInRequest $payInRequest
     ) {
-
         $this->authClient = new AuthClient($configData);
         $accessToken = $this->getAccessToken();
 
         if ($accessToken != null) {
 
-            $paymentMethod = $payInRequest->getPaymentMethod();
-
-            switch ($paymentMethod) {
-                case PaymentMethod::CREDIT_CARD:
-                    $this->payInClient = new CreditCardClient($configData, $accessToken);
+            switch ($payInRequest->getCountry()) {
+                case Country::BRAZIL:
+                    $this->payInService = new BrazilService;
                     break;
-                case PaymentMethod::PIX_STATIC_QR:
-                    $this->payInClient = new PixClient($configData, $accessToken);
+                case Country::COLOMBIA:
+                    $this->payInService = new ColombiaService;
                     break;
-                case PaymentMethod::BOLETO:
-                    $this->payInClient = new BoletoClient($configData, $accessToken);
-                    break;
-                case PaymentMethod::CASH:
-                    $this->payInClient = new CashClient($configData, $accessToken);
-                case PaymentMethod::PSE:
-                    $this->payInClient = new PSEClient($configData, $accessToken);
                 default:
-                    $this->payInClient = null;
+                    $this->payInService = null;
             }
 
-            $payInResponse = $this->payInClient->createPayIn($payInRequest);
+            $payInResponse = $this->payInService->createPayIn($configData, $payInRequest, $accessToken);
             return $payInResponse;
         }
     }

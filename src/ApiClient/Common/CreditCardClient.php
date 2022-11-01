@@ -1,6 +1,6 @@
 <?php
 
-namespace LiquidoBrl\PayInPhpSdk\ApiClient;
+namespace LiquidoBrl\PayInPhpSdk\ApiClient\Common;
 
 use GuzzleHttp\Client;
 
@@ -22,12 +22,12 @@ class CreditCardClient extends PayInClient
         $this->client = new Client();
     }
 
-    public function createPayIn(PayInRequest $boletoRequest)
+    public function createPayIn(PayInRequest $creditCardRequest)
     {
         $url = $this->configData->getPayInBaseUrl() . self::ENDPOINT;
 
-        $payload = $boletoRequest->toArray();
-        $boletoResponse = parent::requestPayIn($url, $payload);
-        return $boletoResponse;
+        $payload = $creditCardRequest->toArray();
+        $creditCardResponse = parent::requestPayIn($url, $payload);
+        return $creditCardResponse;
     }
 }

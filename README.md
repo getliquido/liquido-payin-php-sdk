@@ -18,10 +18,12 @@ All you need to do now is using the `PHP` classes as the example bellow:
 
 ```
 use \LiquidoBrl\PayInPhpSdk\Util\Config;
-use \LiquidoBrl\PayInPhpSdk\Util\PaymentMethod;
+use \LiquidoBrl\PayInPhpSdk\Util\Brazil\PaymentMethod;
 use \LiquidoBrl\PayInPhpSdk\Util\PaymentFlow;
 use \LiquidoBrl\PayInPhpSdk\Model\PayInRequest;
 use \LiquidoBrl\PayInPhpSdk\Service\PayInService;
+use \LiquidoBrl\PayInPhpSdk\Util\Country;
+use \LiquidoBrl\PayInPhpSdk\Util\Currency;
 
 ...
 
@@ -39,6 +41,8 @@ $config = new Config(
 $payInRequest = new PayInRequest([
     "idempotencyKey" => "your idempotency key",
     "amount" => 100,
+    "currency" => Currency::BRL,
+    "country" => Country::BRAZIL,
     "paymentMethod" => PaymentMethod::PIX_STATIC_QR,
     "paymentFlow" => PaymentFlow::DIRECT,
     "callbackUrl" => "your callback url",

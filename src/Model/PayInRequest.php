@@ -2,12 +2,14 @@
 
 namespace LiquidoBrl\PayInPhpSdk\Model;
 
-// use LiquidoBrl\PayInPhpSdk\Util\Currency;
-// use LiquidoBrl\PayInPhpSdk\Util\Country;
+use LiquidoBrl\PayInPhpSdk\Model\Brazil\PaymentTerm;
+use LiquidoBrl\PayInPhpSdk\Model\Colombia\PSE;
+use LiquidoBrl\PayInPhpSdk\Model\Common\RiskData;
+use LiquidoBrl\PayInPhpSdk\Model\Common\Payer;
+use LiquidoBrl\PayInPhpSdk\Model\Common\Card;
 
 class PayInRequest
 {
-
     private $idempotencyKey = null;
     private $amount = null;
     private $currency = null;
@@ -28,9 +30,6 @@ class PayInRequest
         $requestData = array()
     ) {
         $dataObj = (object) $requestData;
-
-        // $this->currency = Currency::BRL;
-        // $this->country = Country::BRAZIL;
 
         if (property_exists($dataObj, 'currency')) {
             $this->currency = $dataObj->currency;
@@ -102,6 +101,11 @@ class PayInRequest
     public function getPaymentMethod()
     {
         return $this->paymentMethod;
+    }
+
+    public function getCountry()
+    {
+        return $this->country;
     }
 
     public function toArray()
