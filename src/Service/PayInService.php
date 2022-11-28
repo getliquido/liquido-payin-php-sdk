@@ -40,6 +40,17 @@ class PayInService
         }
     }
 
+    public function getPseFinancialInstitutions(
+        Config $configData
+    ) {
+        $this->authClient = new AuthClient($configData);
+        $accessToken = $this->getAccessToken();
+        
+        $this->payInService = new ColombiaService;
+        $payInResponse = $this->payInService->getPseFinancialInstitutions($configData, $accessToken);
+        return $payInResponse;
+    }
+
     private function getAccessToken()
     {
         try {

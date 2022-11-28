@@ -5,7 +5,8 @@ namespace LiquidoBrl\PayInPhpSdk\Service\Brazil;
 use LiquidoBrl\PayInPhpSdk\ApiClient\Brazil\BoletoClient;
 use LiquidoBrl\PayInPhpSdk\ApiClient\Brazil\PixClient;
 use LiquidoBrl\PayInPhpSdk\ApiClient\Common\CreditCardClient;
-use LiquidoBrl\PayInPhpSdk\Util\Brazil\PaymentMethod;
+use LiquidoBrl\PayInPhpSdk\Util\Brazil\PaymentMethod as PaymentMethodBrazil;
+use LiquidoBrl\PayInPhpSdk\Util\Common\PaymentMethod as PaymentMethodCommon;
 use LiquidoBrl\PayInPhpSdk\Model\PayInRequest;
 use LiquidoBrl\PayInPhpSdk\Util\Config;
 
@@ -23,13 +24,13 @@ class BrazilService
         $paymentMethod = $payInRequest->getPaymentMethod();
 
         switch ($paymentMethod) {
-            case PaymentMethod::CREDIT_CARD:
+            case PaymentMethodCommon::CREDIT_CARD:
                 $this->payInClient = new CreditCardClient($configData, $accessToken);
                 break;
-            case PaymentMethod::PIX_STATIC_QR:
+            case PaymentMethodBrazil::PIX_STATIC_QR:
                 $this->payInClient = new PixClient($configData, $accessToken);
                 break;
-            case PaymentMethod::BOLETO:
+            case PaymentMethodBrazil::BOLETO:
                 $this->payInClient = new BoletoClient($configData, $accessToken);
                 break;
             default:
