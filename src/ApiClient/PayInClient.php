@@ -38,8 +38,9 @@ abstract class PayInClient
             $responseBody = (string) $response->getBody();
             $payInResponse = json_decode($responseBody);
             return $payInResponse;
-        } catch (\Exception $e) {
-            throw new \Exception("Error while request pay in to Liquido BR API. {$e->getMessage()}");
+        } catch (\GuzzleHttp\Exception\ClientException $e) {
+            $responseBody = json_decode($e->getResponse()->getBody());
+            return $responseBody;
         }
     }
 }
