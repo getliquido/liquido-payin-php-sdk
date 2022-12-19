@@ -52,7 +52,8 @@ class BoletoClient extends PayInClient
             ]);
 
             $responseBody = (string) $response->getBody();
-            return $responseBody;
+            $boletoPdfResponse = json_decode($responseBody);
+            return $boletoPdfResponse;
         } catch (\Exception $e) {
             throw new \Exception("Error while getting Boleto PDF. {$e->getMessage()}");
         }
