@@ -32,7 +32,7 @@ class BoletoClient extends PayInClient
         $boletoResponse = parent::requestPayIn($url, $payload);
 
         $boletoUrl = $this->getBoletoPdfUrl($boletoResponse->idempotencyKey);
-        $boletoResponse->{"boletoUrl"} = $boletoUrl;
+        $boletoResponse->{"boletoUrl"} = $boletoUrl->path;
 
         return $boletoResponse;
     }
@@ -53,7 +53,7 @@ class BoletoClient extends PayInClient
 
             $responseBody = (string) $response->getBody();
             $boletoPdfResponse = json_decode($responseBody);
-            return $boletoPdfResponse->{"path"};
+            return $boletoPdfResponse;
         } catch (\Exception $e) {
             throw new \Exception("Error while getting Boleto PDF. {$e->getMessage()}");
         }
