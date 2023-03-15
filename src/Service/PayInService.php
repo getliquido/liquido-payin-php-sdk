@@ -12,7 +12,7 @@ use LiquidoBrl\PayInPhpSdk\Service\Colombia\ColombiaService;
 class PayInService
 {
 
-    private $authClient = null;
+    protected $authClient = null;
     private $payInService = null;
 
     public function createPayIn(
@@ -51,7 +51,7 @@ class PayInService
         return $payInResponse;
     }
 
-    private function getAccessToken()
+    protected function getAccessToken()
     {
         try {
             $authResponse = $this->authClient->authenticate();
