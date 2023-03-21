@@ -30,7 +30,7 @@ abstract class PayInClient
                 'headers' => [
                     'Content-Type' => 'application/json',
                     'x-api-key' => $this->configData->getClientApiKey(),
-                    'Authorization' => $this->accessToken
+                    'Authorization' => "Bearer " . $this->accessToken
                 ],
                 'json' => $payload
             ]);

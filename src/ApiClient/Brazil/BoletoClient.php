@@ -47,7 +47,7 @@ class BoletoClient extends PayInClient
             $response = $this->client->send($request, [
                 'headers' => [
                     'x-api-key' => $this->configData->getClientApiKey(),
-                    'Authorization' => $this->accessToken
+                    'Authorization' => "Bearer " . $this->accessToken
                 ]
             ]);
 
