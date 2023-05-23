@@ -2,8 +2,8 @@
 
 namespace LiquidoBrl\PayInPhpSdk\Service\Colombia;
 
-use LiquidoBrl\PayInPhpSdk\ApiClient\Colombia\CashClient;
 use LiquidoBrl\PayInPhpSdk\ApiClient\Colombia\PSEClient;
+use LiquidoBrl\PayInPhpSdk\ApiClient\Common\CashClient;
 use LiquidoBrl\PayInPhpSdk\ApiClient\Common\CreditCardClient;
 use LiquidoBrl\PayInPhpSdk\Util\Colombia\PaymentMethod as PaymentMethodColombia;
 use LiquidoBrl\PayInPhpSdk\Util\Common\PaymentMethod as PaymentMethodCommon;
@@ -13,6 +13,8 @@ use LiquidoBrl\PayInPhpSdk\Util\Config;
 
 class ColombiaService
 {
+    private $payInClient = null;
+
     public function createPayIn(
         Config $configData,
         PayInRequest $payInRequest,
@@ -24,7 +26,7 @@ class ColombiaService
             case PaymentMethodCommon::CREDIT_CARD:
                 $this->payInClient = new CreditCardClient($configData, $accessToken);
                 break;
-            case PaymentMethodColombia::CASH:
+            case PaymentMethodCommon::CASH:
                 $this->payInClient = new CashClient($configData, $accessToken);
                 break;
             case PaymentMethodColombia::PSE:
