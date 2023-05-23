@@ -6,4 +6,5 @@ abstract class Country
 {
     const BRAZIL = 'BR';
     const COLOMBIA = 'CO';
+    const MEXICO = 'MX';
 }
