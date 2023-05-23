@@ -8,6 +8,7 @@ use LiquidoBrl\PayInPhpSdk\Util\Config;
 use LiquidoBrl\PayInPhpSdk\Util\Country;
 use LiquidoBrl\PayInPhpSdk\Service\Brazil\BrazilService;
 use LiquidoBrl\PayInPhpSdk\Service\Colombia\ColombiaService;
+use LiquidoBrl\PayInPhpSdk\Service\Mexico\MexicoService;
 
 class PayInService
 {
@@ -23,6 +24,9 @@ class PayInService
                 break;
             case Country::COLOMBIA:
                 $this->payInService = new ColombiaService;
+                break;
+            case Country::MEXICO:
+                $this->payInService = new MexicoService;
                 break;
             default:
                 $this->payInService = null;
