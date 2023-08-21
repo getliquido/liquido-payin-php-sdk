@@ -7,6 +7,7 @@ use LiquidoBrl\PayInPhpSdk\Model\Colombia\PSE;
 use LiquidoBrl\PayInPhpSdk\Model\Common\RiskData;
 use LiquidoBrl\PayInPhpSdk\Model\Common\Payer;
 use LiquidoBrl\PayInPhpSdk\Model\Common\Card;
+use LiquidoBrl\PayInPhpSdk\Model\Common\Proposal;
 
 class PayInRequest
 {
@@ -25,6 +26,9 @@ class PayInRequest
     private $card = null;
     private $installments = null;
     private $pse = null;
+    private $paymentProposalInfo = null;
+    private $installmentPlanId = null;
+
 
     public function __construct(
         $requestData = array()
@@ -90,6 +94,15 @@ class PayInRequest
         if (property_exists($dataObj, 'pse')) {
             $pseObj = new PSE($dataObj->pse);
             $this->pse = $pseObj;
+        }
+
+        if (property_exists($dataObj, 'paymentProposalInfo')) {
+            $proposalObj = new Proposal($dataObj->paymentProposalInfo);
+            $this->paymentProposalInfo = $proposalObj;
+        }
+
+        if (property_exists($dataObj, 'installmentPlanId')) {
+            $this->installmentPlanId = $dataObj->installmentPlanId;
         }
     }
 
@@ -167,7 +180,15 @@ class PayInRequest
         if ($this->pse != null) {
             $arrayData["pse"] = $this->pse->toArray();
         }
+        
+        if ($this->paymentProposalInfo != null) {
+            $arrayData["paymentProposalInfo"] = $this->paymentProposalInfo->toArray();
+        }
 
+        if ($this->installmentPlanId != null) {
+            $arrayData["installmentPlanId"] = $this->installmentPlanId;
+        }
+        
         return $arrayData;
     }
 }

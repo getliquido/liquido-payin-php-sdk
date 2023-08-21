@@ -8,6 +8,7 @@ use LiquidoBrl\PayInPhpSdk\Util\Config;
 use LiquidoBrl\PayInPhpSdk\Util\Country;
 use LiquidoBrl\PayInPhpSdk\Service\Brazil\BrazilService;
 use LiquidoBrl\PayInPhpSdk\Service\Colombia\ColombiaService;
+use LiquidoBrl\PayInPhpSdk\Service\Common\CommonService;
 use LiquidoBrl\PayInPhpSdk\Service\Mexico\MexicoService;
 
 class PayInService
@@ -28,8 +29,6 @@ class PayInService
             case Country::MEXICO:
                 $this->payInService = new MexicoService;
                 break;
-            default:
-                $this->payInService = null;
         }
     }
 
@@ -63,6 +62,32 @@ class PayInService
         $this->payInService = new ColombiaService;
         $payInResponse = $this->payInService->getPseFinancialInstitutions($configData, $accessToken);
         return $payInResponse;
+    }
+
+    public function getInstallmentPlans(
+        Config $configData,
+        String $planId = null
+    )
+    {
+        $this->authClient = new AuthClient($configData);
+        $accessToken = $this->getAccessToken();
+
+        $this->payInService = new CommonService;
+        $installmentPlanResponse = $this->payInService->getInstallmentPlans($configData, $accessToken, $planId);
+        return $installmentPlanResponse;
+    }
+
+    public function createProposal(
+        Config $configData,
+        PayInRequest $payInRequest
+    )
+    {
+        $this->authClient = new AuthClient($configData);
+        $accessToken = $this->getAccessToken();
+
+        $this->payInService = new CommonService;
+        $proposalResponse = $this->payInService->createProposal($configData, $payInRequest, $accessToken);
+        return $proposalResponse;
     }
 
     protected function getAccessToken()
