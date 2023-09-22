@@ -2,6 +2,8 @@
 
 namespace LiquidoBrl\PayInPhpSdk\Model;
 
+use LiquidoBrl\PayInPhpSdk\Model\Common\AdditionalInfo;
+
 class RefundRequest
 {
     private $idempotencyKey = null;
@@ -11,6 +13,7 @@ class RefundRequest
     private $country = null;
     private $description = null;
     private $callbackUrl = null;
+    private $additionalInfo = null;
 
     public function __construct(
         $requestData = array()
@@ -43,6 +46,11 @@ class RefundRequest
 
         if (property_exists($dataObj, 'callbackUrl')) {
             $this->callbackUrl = $dataObj->callbackUrl;
+        }
+
+        if (property_exists($dataObj, 'additionalInfo')) {
+            $additionalInfoObj = new AdditionalInfo($dataObj->additionalInfo);
+            $this->additionalInfo = $additionalInfoObj;
         }
     }
 
@@ -86,6 +94,10 @@ class RefundRequest
 
         if ($this->callbackUrl != null) {
             $arrayData["callbackUrl"] = $this->callbackUrl;
+        }
+
+        if ($this->additionalInfo != null) {
+            $arrayData["additionalInfo"] = $this->additionalInfo->toArray();
         }
 
         return $arrayData;
