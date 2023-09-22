@@ -90,6 +90,13 @@ class PayInService
         return $proposalResponse;
     }
 
+    public function getBanksList(String $country)
+    {
+        $this->payInService = new CommonService;
+        $banksListResponse = $this->payInService->getBanksList($country);
+        return $banksListResponse;
+    }
+
     protected function getAccessToken()
     {
         try {

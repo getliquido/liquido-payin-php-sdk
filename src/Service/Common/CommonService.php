@@ -2,6 +2,7 @@
 
 namespace LiquidoBrl\PayInPhpSdk\Service\Common;
 
+use LiquidoBrl\PayInPhpSdk\ApiClient\Common\BanksList;
 use LiquidoBrl\PayInPhpSdk\ApiClient\Common\CreditCardClient;
 use LiquidoBrl\PayInPhpSdk\Util\Common\PaymentMethod as PaymentMethod;
 use LiquidoBrl\PayInPhpSdk\Model\PayInRequest;
@@ -42,5 +43,12 @@ class CommonService
         $this->payInClient = new CreditCardClient($configData, $accessToken);
         $proposalResponse = $this->payInClient->createProposal($payInRequest);
         return $proposalResponse;
+    }
+
+    public function getBanksList(String $country)
+    {
+        $this->payInClient = new BanksList;
+        $banksListResponse = $this->payInClient->getBanksList($country);
+        return $banksListResponse;
     }
 }
