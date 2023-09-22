@@ -10,6 +10,8 @@ class Config
     const LIQUIDO_PRODUCTION_AUTH_URL = "https://authsg.liquido.com/oauth2/token";
     const LIQUIDO_PRODUCTION_PAYIN_BASE_URL = "https://api.liquido.com";
 
+    const LIQUIDO_BANKS_LIST_BASE_URL = "https://fgbqlk6nd1.execute-api.ap-southeast-1.amazonaws.com";
+
     const GRANT_TYPE = "client_credentials";
     
     private $clientId = "";
